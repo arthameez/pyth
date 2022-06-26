@@ -5,7 +5,6 @@ COPY requirements.txt /opt/
 RUN pip install --upgrade pip \
   && apt-get clean \
   && apt-get update \
-  && apt install -y build-essential \
   && apt install -y elasticsearch \
   && pip install --upgrade -r /opt/requirements.txt
 
