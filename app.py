@@ -16,7 +16,7 @@ app = Flask(__name__)
 @app.route("/healthz")
 def healthz():
     resp = Response("ok")
-    resp.headers['Custom-Header'] = 'This is OK, Awesome'
+    resp.headers['Custom-Header'] = 'awesome'
     # this is awesome tying things
     return resp
 
