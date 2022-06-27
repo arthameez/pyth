@@ -1,36 +1,22 @@
-from datetime import datetime
 from flask import Flask
-from flast import jsonify
-from flask import request
 from flask import Response
 from flask import render_template
-from elasticsearch import Elasticsearch
-
-# from api.elastic_test import connect_elasticsearch
-# from flask_app import app
-# from config.config_handling import get_config_value
-
-
-es = Elasticsearch('http://localhost:9200')
 
 app = Flask(__name__)
 
 
-	
 @app.route('/')
 def index():
     #return render_template("index.html")
-    return "This is the amazing app EVER, Abdul Rahiman Thameez"
+    return "This is the amazing app EVER, Abdul Rahiman Thameez is peaking at wdi."
  
 
-@app.route('/healthz')
+@app.route("/healthz")
 def healthz():
-    resp = Response('ok')
+    resp = Response("ok")
     resp.headers['Custom-Header'] = 'Awesome'
     # this is awesome tying things
     return resp
 
-
-if __name__ == '__main__':
-    app.debug = True
+if __name__ == "__main__":
     app.run(host='0.0.0.0', port='8080')
