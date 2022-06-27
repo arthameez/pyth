@@ -16,12 +16,12 @@ app = Flask(__name__)
 @app.route('/')
 def index():
     #return render_template("index.html")
-    return "This is the amazing app EVER, Abdul Rahiman Thameez is peaking at wdi."
+    return "This is the amazing app EVER, Abdul Rahiman Thameez"
  
 
-@app.route("/healthz")
+@app.route('/healthz')
 def healthz():
-    resp = Response("ok")
+    resp = Response('ok')
     resp.headers['Custom-Header'] = 'Awesome'
     # this is awesome tying things
     return resp
