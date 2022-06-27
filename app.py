@@ -9,7 +9,7 @@ from elasticsearch import Elasticsearch
 # from config.config_handling import get_config_value
 
 
-es = Elasticsearch('http://localhost:9200')
+es = Elasticsearch('http://elasticsearch:9200')
 
 app = Flask(__name__)
 
