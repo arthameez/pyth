@@ -1,4 +1,5 @@
-Project details are placed at - https://github.com/arthameez/pyth.git
+Project details are placed at - 
+https://github.com/arthameez/pyth.git
 
 Prerequisites:
 =============
@@ -9,9 +10,12 @@ Tools Required:
 ==============
 
 1> VMware virtual box => https://www.oracle.com/ae/virtualization/technologies/vm/downloads/virtualbox-downloads.html
+
 (install it by double clicking the application and from task manager -> CPU verify that virualisation is enabled )
+
 2> Minishift => https://github.com/minishift/minishift/releases 
 (extract this in a folder)
+
 3> windows CMD - command line interface or powershell
 
 Depoyment Procedure:
