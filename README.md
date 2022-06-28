@@ -54,11 +54,7 @@ Note - you may get ureferenced brach master, go to build and in the configuratio
 
 https://<route URL>/healthz
 
-curl --location --request POST 'curl --location --request POST 'http://elastic-my-project.192.168.99.115.nip.io:80/insert-data' \
---form 'operation="insert"' \
---form 'city_id="1"' \
---form 'city="Abu Dhabi"' \
---form 'population="14910000"'/insert-data' \
+curl --location --request POST 'http://elastic-my-project.192.168.99.115.nip.io:80/insert-data' \
 --form 'operation="insert"' \
 --form 'city_id="1"' \
 --form 'city="Abu Dhabi"' \
