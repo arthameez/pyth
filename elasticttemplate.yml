@@ -84,12 +84,20 @@ objects:
           volumeMounts:
           - mountPath: /elasticsearch/persistent
             name: ${NAME}-data
+          resources:
+            limits:
+              cpu: 293m
+              memory: 1024M
+            requests:
+              cpu: 146m
+              memory: 512M
         dnsPolicy: ClusterFirst
         restartPolicy: Always
         volumes:
         - name: ${NAME}-data
           persistentVolumeClaim:
             claimName: ${NAME}
+
 parameters:
 - name: NAME
   description: Elasticsearch service name
