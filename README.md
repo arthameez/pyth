@@ -1,6 +1,3 @@
-Project details are placed at - 
-https://github.com/arthameez/pyth.git
-
 Prerequisites:
 =============
 
@@ -56,8 +53,14 @@ Note - you may get ureferenced brach master, go to build and in the configuratio
 8> access the applicaiton with three URL - application routs-> you will find by default a URL hit on it will take you to index page , alter other URL as per application example below
 
 https://<route URL>/healthz
-https://<route URL>/insert-data
-curl -XPOST "http://[localhost]:9200/indexname/typename/optionalUniqueId" -d '{ "field" : "value" }'
+
+curl --location --request POST '<route URL>:9200/insert-data' \
+--form 'operation="insert"' \
+--form 'city_id="1"' \
+--form 'city="Abu Dhabi"' \
+--form 'population="14910000"'
+
+	
 https://<route URL>/get-population
 
 once completed you may delete VM - minishift delete -f --clear-cache
