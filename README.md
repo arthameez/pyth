@@ -61,3 +61,118 @@ Removed cache content at: 'C:\Users\etisalat\.minishift\cache'
 Removing entries from kubeconfig for cluster: 192-168-99-113:8443
 Deleting the Minishift VM...
 Minishift VM deleted.
+
+
+
+Installing Helm into Minishift
+==============================
+Helm has two parts: a client (helm) and a server (tiller)
+Tiller runs inside of your Kubernetes cluster, and manages releases (installations) of your charts.
+Helm runs on your laptop, CI/CD, or wherever you want it to run.
+
+Need to install Helm on your laptop, as it consists of two parts, a client (helm) and a server (tiller).
+
+
+
+To find the latest client go to https://github.com/helm/helm/releases/tag/v3.9.0 <== Unpack the helm binary and add it to your PATH and you are good to go!
+
+minishift install 
+
+https://github.com/minishift/minishift/releases
+
+https://cloud.redhat.com/blog/deploy-helm-charts-minishifts-openshift-local-development
+
+
+helm install APP --host 192.168.99.103 --kube-context default/192-168-99-103:8443/system:admin
+
+https://artifacthub.io/packages/helm/elastic/elasticsearch
+
+helm repo add elastic https://helm.elastic.co
+
+helm install elasticsearch --version 7.17.3 elastic/elasticsearch
+helm install elasticsearch --version 7.17.3 elastic/elasticsearch  --kube-apiserver string localhost:8443
+
+
+
+References:
+==========
+
+https://github.com/kadnan/Python-Elasticsearch/blob/master/fetch_recipes.py
+
+code references -
+https://collabnix.com/how-to-build-and-run-a-python-app-in-a-container/
+https://github.com/noahgift/kubernetes-hello-world-python-flask/blob/main/app.py
+
+
+Commands:
+========
+== Virtual BOX ==
+https://www.virtualbox.org/wiki/Downloads 
+
+https://www.osboxes.org/
+https://www.osboxes.org/centos/ - download vdi image required for creating centos 
+
+create new VM 
+
+== Git hub ==
+
+git init
+git add -A (to add all)
+git commit -m "first commit"
+git branch -M main
+git remote add origin https://github.com/arthameez/pyth.git
+
+git push -u origin main
+git remote -v
+git remote add origin https://github.com/arthameez/pyth.git
+
+git branch -M main
+git push -u origin main
+
+docker installation:
+===================
+
+https://repos.mirantis.com/centos/8/x86_64/test-20.10/Packages/
+
+containerd.io-1.5.8-3.1.el8.x86_64.rpm
+docker-ee-20.10.9-3.el8.x86_64.rpm
+docker-ee-cli-20.10.9-3.el8.x86_64.rpm
+container-selinux-2.9-4.el7.noarch.rpm
+
+
+https://www.cyberithub.com/solved-failed-to-download-metadata-for-repo-appstream/ 
+cd /etc/yum.repos.d/
+sed -i 's/mirrorlist/#mirrorlist/g' /etc/yum.repos.d/CentOS-*
+sed -i 's|#baseurl=http://mirror.centos.org|baseurl=http://vault.centos.org|g' /etc/yum.repos.d/CentOS-*
+
+
+yum install policycoreutils-python
+rpm -ivh container-selinux-2.9-4.el7.noarch.rpm
+yum install container-selinux
+
+rpm -ivh docker-ee-20.10.9-3.el8.x86_64.rpm
+rpm -ivh docker-ee-cli-20.10.9-3.el8.x86_64.rpm
+rpm -ivh docker-ee-20.10.9-3.el8.x86_64.rpm
+yum install libcgroup
+systemctl status docker
+systemctl enable docker
+systemctl start docker
+docker ps
+
+Docker registry = Public registry
+https://hub.docker.com/
+docker login arthameez/<>
+docker pull arthameez/my-iamage:latest
+
+
+Install Portainer
+=================
+
+docker pull portainer/portainer-ce:2.9.3
+docker volume create portainer_data
+
+docker run -d -p 8000:8000 -p 9443:9443 --name portainer \
+    --restart=always \
+    -v /var/run/docker.sock:/var/run/docker.sock \
+    -v portainer_data:/data \
+    portainer/portainer-ce:2.9.3
