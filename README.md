@@ -57,6 +57,7 @@ Note - you may get ureferenced brach master, go to build and in the configuratio
 
 https://<route URL>/healthz
 https://<route URL>/insert-data
+curl -XPOST "http://[localhost]:9200/indexname/typename/optionalUniqueId" -d '{ "field" : "value" }'
 https://<route URL>/get-population
 
 once completed you may delete VM - minishift delete -f --clear-cache
