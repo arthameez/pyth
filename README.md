@@ -100,6 +100,132 @@ helm repo add elastic https://helm.elastic.co
 helm install elasticsearch --version 7.17.3 elastic/elasticsearch
 helm install elasticsearch --version 7.17.3 elastic/elasticsearch  --kube-apiserver string localhost:8443
 
+											 Deployment using OC CLI
+
+OpenShift API for oc CLI access : https://api.ocpprodau01.etisalat.corp.ae:6443
+
+oc project
+	oc project my-project
+	oc projects
+	oc whoami
+              oc get all
+              oc new-build --binary=true --name=my-app-build 
+oc start-build "bo-back-end" --from-dir=. –follow
+oc new-app -i bo-back-end
+oc adm top pod - to show thw highest resouces among the pods in the project
+oc get bc
+oc get dc
+oc get svc
+oc edit svc - svc name
+oc get pods -o wide
+oc adm top pod
+
+Deployment using KUBECTL CLI
+
+tkgi get-kubeconfig projectname -a  clustername -u username -p password -k
+kubectl config use-context projectname
+kubectl config set-context $(kubectl config current-context) --namespace=prod
+kubectl config view | grep namespace
+
+
+kind: Service
+metadata:
+name: httpd-service
+spec:
+type: NodePort --> type of service
+ports:
+- targetPort: 80 --> port to be exposed of the container
+port: 80 --> port to be used within the node
+nodePort: 30000 --> port for outside world
+selector:
+component: web
+
+kubectl create appname –image=<imageregistry:tag>
+k expose deployment  appname --port=8080 --target-port=8080
+kubectl create secret docker-registry harbor-cred --docker-server=registryname  --docker-username=username --docker-password=passwprd  --docker-email=emailid@.com
+kubectl logs -l app=elasticsearch
+SSH into POD/CONTAINER - kubectl exec --stdin --tty tesseract-heavy-67bb896545-lb7lg -- /bin/bash
+ kubectl describe pod share-files-api-test-79cc5f66b8-pbj44 (docker inspect alternative in kubernatives)
+ kubectl delete all -l app=f (selector or label) <== this is delete all the resources(pods/svc/secrets/replica set etc) of the particular selector/label
+
+
+Deployment using Docker Swarm
+
+docker-compose.yml
+
+git clone https://github.com/arthameez/pyth.git
+cd to binary location 
+docker build -t registryurl_registryrep/appname:$BUILD_NUMBER/ImageTag
+docker login registryurl -u=admin -p password
+docker build -t arthameez/python:latest
+docker push arthameez/python:latest
+
+create below yaml file
+
+version: '3.7'
+services:
+    elasticsearch:
+      image: docker.elastic.co/elasticsearch/elasticsearch:8.2.3
+      deploy:
+       placement:
+        constraints:
+         - node.role == manager
+      ports:
+        - '9200:9200'
+      environment:
+        - cluster.name=docker-cluster
+        - node.name=es01
+        - discovery.seed_hosts=es02
+        - cluster.initial_master_nodes=es01,es02
+        - "ES_JAVA_OPTS=-Xms1024m -Xmx1024m"
+      volumes:
+        - '/elk_data/:/usr/share/elasticsearch/data'
+      networks:
+        - stack
+services:
+    mypythonapp:
+        image: '${REGISTRY_URL:TAG}'
+        ports:
+            - '8092'
+        networks:
+            - stack
+        volumes:
+          - '/logs:/logs'
+          - '/etc/hosts:/etc/hosts'
+          - '/etc/localtime:/etc/localtime:ro'
+          - ' /Profile:/Profile'
+        depends_on:
+            - elasticsearch
+        environment:
+            - TZ=Asia/Dubai
+            - PROFILE_FILE_LOCATION=/Profile/activeProfile
+        deploy:
+            placement:
+              constraints:
+               - node.labels.workload == app
+            replicas: 1
+            update_config:
+              parallelism: 1
+              delay: 10s
+            restart_policy:
+              condition: on-failure
+            labels:
+              com.docker.lb.hosts: myapp.corp.ae
+              com.docker.lb.network: stack
+              com.docker.lb.port: 8092
+              com.docker.lb.context_root: /
+        healthcheck:
+          test: wget -nv -t1 --spider 'http://localhost:8092/healthz' || exit 1
+          interval: 30s
+          timeout: 10s
+          retries: 3
+          start_period: 300s
+
+
+docker stack deploy -c usp-app-stack-compose.yml my-pythonapp
+docker service ls 
+
+
 
 
 References:
