@@ -100,7 +100,7 @@ helm repo add elastic https://helm.elastic.co
 helm install elasticsearch --version 7.17.3 elastic/elasticsearch
 helm install elasticsearch --version 7.17.3 elastic/elasticsearch  --kube-apiserver string localhost:8443
 
-											 Deployment using OC CLI
+**Deployment using OC CLI**
 
 OpenShift API for oc CLI access : https://api.ocpprodau01.etisalat.corp.ae:6443
 
@@ -120,7 +120,7 @@ oc edit svc - svc name
 oc get pods -o wide
 oc adm top pod
 
-Deployment using KUBECTL CLI
+**Deployment using KUBECTL CLI**
 
 tkgi get-kubeconfig projectname -a  clustername -u username -p password -k
 kubectl config use-context projectname
@@ -149,9 +149,8 @@ SSH into POD/CONTAINER - kubectl exec --stdin --tty tesseract-heavy-67bb896545-l
  kubectl delete all -l app=f (selector or label) <== this is delete all the resources(pods/svc/secrets/replica set etc) of the particular selector/label
 
 
-Deployment using Docker Swarm
+**Deployment using Docker Swarm**
 
-docker-compose.yml
 
 git clone https://github.com/arthameez/pyth.git
 cd to binary location 
@@ -160,6 +159,8 @@ docker login registryurl -u=admin -p password
 docker build -t arthameez/python:latest
 docker push arthameez/python:latest
 
+**docker-compose.yml**
+						       
 create below yaml file
 
 version: '3.7'
