@@ -272,8 +272,8 @@ stage('Cloning') {
 }
 
 
-Jenkins deployment to Kubernetes
-============================
+Jenkins deployment to Kubernetes  (kubernetes deploy pluggin)
+=============================================================
 Jenkins deployment to Docker Swarm
 
 pipeline {
