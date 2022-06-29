@@ -231,8 +231,118 @@ services:
 docker stack deploy -c usp-app-stack-compose.yml my-pythonapp
 docker service ls 
 
+Jenkins deployment to OpenShift
+============================
+def wsDir = "/app"
+ws (wsDir) {
+
+stage('Cloning') {
+
+	  git branch: 'main', credentialsId: 'jenkinscredentials', poll: false, url: GIT_iRetailerAPI
+      mvnHome = tool 'M3'
+   }
 
 
+   stage('Build Project') {
+
+   """
+    dir('/app'){
+	docker build -t rigistrureo:$BUILD_NUMBER 
+    }
+	sh """
+    stage('Push Docker Image to Registry') 
+        {
+			sh """
+			docker login registry URL -u=$dtradmin -p $dtrpassword
+			docker tag image name registryURL_repo:TAG
+			docker push registryURL_repo:TAG
+			"""
+			
+}
+
+	/usr/local/bin/oc login --server=https://hostname:6443 --insecure-skip-tls-verify=true --token=<tokenID>
+	/usr/local/bin/oc project projectname
+	/usr/local/bin/oc new-build --binary=true --name=my-pythonapp --image-stream=openshift/redhat-openjdk18-openshift:1.7
+	/usr/local/bin/oc start-build "pythonapp" --from-dir=./app --follow
+	/usr/local/bin/oc new-app -i pythonapp	
+	"""
+   }
+
+  }
+}
+
+
+Jenkins deployment to Kubernetes
+============================
+Jenkins deployment to Docker Swarm
+
+pipeline {
+
+
+  agent {label 'master'}
+
+
+  stages {
+
+
+    stage('Deploy App') {
+      steps {
+           milestone(1)
+                kubernetesDeploy(
+                  kubeconfigId: 'configID',
+                  configs: appdeployment.yml',
+                  enableConfigSubstitution: true
+                ) 
+      }
+    }
+
+  }
+
+}
+
+
+===============================
+node('nodename’) {
+
+
+def wsDir = "/app "
+ws (wsDir) {
+
+stage('Cloning') {
+
+	  git branch: 'main', credentialsId: 'jenkinssshprivate', poll: false, url: ‘https://github.com/arthameez/pyth.git'
+   }
+
+
+   stage('Build Project') {
+     dir('location to binary') {
+    sh "docker build -t rigistrureo:$BUILD_NUMBER ."
+}
+   }
+
+stage('Push Docker Image to Registry') 
+        {
+			sh """
+			docker login registry URL -u=$dtradmin -p $dtrpassword
+			docker tag image name registryURL_repo:TAG
+			docker push registryURL_repo:TAG
+			"""
+			
+}
+   }
+   }
+node('nodename') {
+stage ('Deploy Application) {
+
+dir(' /app/') {
+
+	sh """
+   docker stack deploy -c usp-app-stack-compose.yml usp
+	"""
+}
+}
+
+}
 
 References:
 ==========
