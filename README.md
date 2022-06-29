@@ -99,6 +99,8 @@ helm repo add elastic https://helm.elastic.co
 
 helm install elasticsearch --version 7.17.3 elastic/elasticsearch
 helm install elasticsearch --version 7.17.3 elastic/elasticsearch  --kube-apiserver string localhost:8443
+											 
+flux bootstrap github --owner=$GITHUB_USER --repository=python --branch=main --path=./clusters/directory-name --personal
 
 Deployment using OC CLI
 =======================
